@@ -41,9 +41,9 @@
                             </td>
                             <td>
                                 <span class="flex items-center join shadow-sm rounded-full">
-                                    <button class="join-item btn btn-circle btn-sm bg-transparent hover:bg-green-100 hover:border-none tooltip"  data-tip="View">
+                                    <a href="{{route('tasks.show', ['task'=> $task])}}" class="join-item btn btn-circle btn-sm bg-transparent hover:bg-green-100 hover:border-none tooltip"  data-tip="View">
                                         <x-icon name="visibility" class="text-lg" />
-                                    </button>
+                                    </a>
                                     <button class="join-item btn btn-circle btn-sm bg-transparent hover:bg-yellow-100 hover:border-none tooltip"  data-tip="Edit">
                                         <x-icon name="edit" class="text-lg" />
                                     </button>
