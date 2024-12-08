@@ -24,7 +24,7 @@ class TaskController extends Controller
         if($request->has('mytasks')){
             return view('pages.my-tasks', ['tasks' => $tasks]);
         } else {
-            return view('pages.company.tasks', ['tasks' => $tasks]);
+            return view('pages.company.tasks.tasks', ['tasks' => $tasks]);
         }
     }
 
@@ -49,7 +49,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        return $task;
+        return view('pages.company.tasks.task', ['task' => $task]);
     }
 
     /**
