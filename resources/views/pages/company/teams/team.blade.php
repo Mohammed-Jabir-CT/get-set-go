@@ -44,6 +44,8 @@
             </li>
         </ul>
     </div>
-    <x-modal id="editModal" title="Edit"></x-modal>
+    <x-modal id="editModal" title="Edit">
+        
+    </x-modal>
     <x-modal id="deleteModal" title="Delete"></x-modal>
 </x-layouts.app>

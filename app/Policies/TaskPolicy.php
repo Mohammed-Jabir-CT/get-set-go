@@ -48,6 +48,11 @@ class TaskPolicy
         return $user->id === $task->created_by;
     }
 
+    public function updateStatus(User $user, Task $task)
+    {
+        return $user->id === $task->created_by || $user->id === $task->assigned_to;
+    }
+
     /**
      * Determine whether the user can delete the model.
      */

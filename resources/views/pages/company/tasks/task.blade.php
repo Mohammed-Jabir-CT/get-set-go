@@ -7,13 +7,19 @@
                 'badge-error' => $task->status === 'initiated',
                 'badge-warning' => $task->status === 'ongoing',
                 'badge-success' => $task->status === 'completed',
-            ])>{{ $task->status }}</span> 
+            ])>{{ $task->status }}</span>
+            <a href="{{ route('projects.show', ['project' => $task->project]) }}" class="btn btn-xs">
+                {{ $task->project->name }}
+                <div class="badge badge-primary badge-xs">Project</div>
+            </a>
         </h1>
         <span class="flex items-center justify-end join shadow-sm rounded-full">
-            <button onclick="toggleEdit()" class="join-item btn btn-circle bg-transparent hover:bg-yellow-100 hover:border-none tooltip"  data-tip="Edit">
+            <button class="join-item btn btn-circle bg-transparent hover:bg-yellow-100 hover:border-none tooltip"
+                data-tip="Edit">
                 <x-icon name="edit" class="text-lg" />
             </button>
-            <button class="join-item btn btn-circle bg-transparent hover:bg-red-100 hover:border-none tooltip"  data-tip="Delete">
+            <button class="join-item btn btn-circle bg-transparent hover:bg-red-100 hover:border-none tooltip"
+                data-tip="Delete">
                 <x-icon name="delete" class="text-lg" />
             </button>
         </span>
@@ -23,10 +29,25 @@
         <ul class="flex flex-col gap-2 [&_span]:text-neutral col-span-8 rounded-box p-2 border bg-base-100 join-item">
             <li>
                 <label class="form-control text-md">
-                    <textarea id="description" class="textarea textarea-bordered w-full h-fit resize-none" placeholder="Description" readonly>{{ $task->description }}</textarea>
+                    <textarea id="description" class="textarea textarea-bordered w-full h-fit resize-none" placeholder="Description"
+                        readonly>{{ $task->description }}</textarea>
                 </label>
             </li>
-
+            <li>
+                <div class="flex items-center gap-3">
+                    <div>
+                        Status: <select onchange="setStatus(event)"
+                        class="select select-xs select-bordered w-fit select-primary">
+                        <option {{ $task->status == 'initiated' ? 'selected' : '' }} value="initiated">Initiated
+                        </option>
+                        <option {{ $task->status == 'ongoing' ? 'selected' : '' }} value="ongoing">Ongoing</option>
+                        <option {{ $task->status == 'completed' ? 'selected' : '' }} value="completed">Completed
+                        </option>
+                    </select>
+                    </div>
+                    <span id="status-loader" class="loading loading-spinner loading-xs text-primary hidden"></span>
+                </div>
+            </li>
         </ul>
         <ul
             class="flex flex-col gap-2 [&_span]:text-neutral rounded-box p-2 border col-span-2 bg-base-100 text-sm join-item">
@@ -47,11 +68,22 @@
         </ul>
     </div>
     <script>
-        function toggleEdit(){
-            let isReadOnly = document.querySelector('#description').readOnly;
-            document.querySelector('#description').readOnly = !isReadOnly;
-            console.log(document.querySelector('#description').readOnly);
+        function setStatus(e) {
+            let loader = document.getElementById("status-loader");
+            loader.classList.remove("hidden");
+
+            const status = e.target.value;
             
+            axios.post('{{ route('tasks.updateStatus', ['task' => $task]) }}', {
+                    status: status
+                })
+                .then(response => {
+                    console.log('Status updated successfully');
+                    location.reload();
+                })
+                .catch(error => {
+                    console.error('Error updating status:', error);
+                });
         }
     </script>
 </x-layouts.app>

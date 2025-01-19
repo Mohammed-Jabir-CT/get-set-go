@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class TaskController extends Controller
 {
@@ -74,5 +75,17 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         //
+    }
+
+    public function updateStatus(Request $request, Task $task)
+    {
+        Gate::authorize('updateStatus', $task);
+        
+
+        $task = Task::find($task->id);
+        $task->status = $request->status;
+        $task->save();
+
+        return redirect()->route('tasks.index');
     }
 }

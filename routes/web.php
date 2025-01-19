@@ -38,6 +38,11 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('teams', TeamController::class);
     Route::resource('projects', ProjectController::class);
-
     Route::resource('tasks', TaskController::class);
+
+    Route::post('/tasks/update-status/{task}', [TaskController::class, 'updateStatus'])->name('tasks.updateStatus');
+
+    Route::get('/performance', function(){
+        return view('pages.company.performance.performance');
+    })->name('performance');
 });

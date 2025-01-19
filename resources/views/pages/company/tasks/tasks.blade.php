@@ -1,7 +1,7 @@
 <x-layouts.app title="Tasks" description="Tasks Listing page for GetSetGo task manager.">
     <h1 class="flex gap-2 items-center text-xl font-bold text-neutral px-2">
         <x-icon name="list_alt" />
-        Tasks
+        All Tasks
     </h1>
     <div class="divider my-2"></div>
     <div class="rounded-box p-2 border">

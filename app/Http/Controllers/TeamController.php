@@ -52,7 +52,7 @@ class TeamController extends Controller
     public function show(Team $team)
     {
         Gate::authorize('view', $team);
-        $team = $team->with(['creator','members','projects'])->first(['id', 'name', 'created_by', 'status', 'created_at']);
+        $team = $team->with(['creator', 'members', 'projects'])->first(['id', 'name', 'created_by', 'status', 'created_at']);
         return view('pages.company.teams.team', ['team' => $team]);
     }
 
@@ -71,7 +71,10 @@ class TeamController extends Controller
     public function update(Request $request, Team $team)
     {
         Gate::authorize('update', $team);
-        //
+        $team->status = $request->has('status') ? 1 : 0;
+        $team->name = $request->has('name') ? $request->name : $team->name;
+        $team->save();
+        return redirect()->back();
     }
 
     /**

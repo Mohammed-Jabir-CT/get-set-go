@@ -9,9 +9,9 @@
                         My Tasks</a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{ route('performance') }}">
                         <x-icon name="monitoring" />
-                        Perfomance
+                        Performance
                     </a>
                 </li>
                 <li>
